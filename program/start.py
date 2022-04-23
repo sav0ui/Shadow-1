@@ -5,23 +5,19 @@ from sys import version_info
 from time import time
 
 from config import (
-    BOT_PHOTO,
     ALIVE_IMG,
     ALIVE_NAME,
     BOT_NAME,
+    BOT_TOKEN,
+    DEV_PHOTO,
     BOT_USERNAME,
     GROUP_SUPPORT,
     OWNER_NAME,
-    SUDO_USERS,
-    BOT_TOKEN,
-    DEV_PHOTO,
-    DEV_NAME,
     UPDATES_CHANNEL,
 )
 from program import __version__
 from driver.veez import user
 from driver.filters import command, other_filters
-from driver.decorators import sudo_users_only
 from driver.database.dbchat import add_served_chat, is_served_chat
 from driver.database.dbpunish import is_gbanned_user
 from pyrogram import Client, filters, __version__ as pyrover
@@ -58,79 +54,98 @@ async def _human_time_duration(seconds):
     return ", ".join(parts)
 
 
-@Client.on_message(command("start") & filters.private & ~filters.edited)
+@Client.on_message(
+    command(["start", f"start@{BOT_USERNAME}"]) & filters.private & ~filters.edited
+)
 async def start_(client: Client, message: Message):
-    await message.reply_photo(
-        photo=f"{BOT_PHOTO}",
-        caption=f"""✨ **مرحبا عزيزي » {message.from_user.mention()} !**\n
-💭 **انا بوت استطيع تشغيل الموسيقي والفديو في محادثتك الصوتية**
+    await message.reply_text(
+        f"""✨ **مرحبا عزيزي ↤ {message.from_user.mention()} !**\n
+**🤖╖•انا بوت استطيع تشغيل الموسيقي والفديو في محادثتك الصوتية**
+**⚙️╢•  تعلم طريقة تشغيلي واوامر التحكم بي عن طريق  » 📚 الاوامر !**
+**♻️╜ •لتعلم طريقة تشغيلي بمجموعتك اضغط علي » ❓طريقة التفعيل !**
 
-💡 تعلم طريقة تشغيلي واوامر التحكم بي عن طريق  » 📚 الاوامر !
+**[👨🏻‍💻 ࿋ＤＥＶ ＳＡＶＯ࿋👨🏻‍💻](https://t.me/s_a_s_a_3li)**
+**[⫷ 𝗠𝗨𝗦𝗜𝗖 𝗦𝗔𝗩𝗢 ⫸](https://t.me/L_S_A_V_O)**
 
-🔖 لتعلم طريقة تشغيلي بمجموعتك اضغط علي » ❓طريقة التفعيل !
+
 """,
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "• نـصـب بـوتك مـن هـنا •", url="https://t.me/FA9SH/2270",
+                        "➕اضـف الـبـوت لـمـجـمـوعـتـك➕",
+                        url=f"https://t.me/{BOT_USERNAME}?startgroup=true",
                     )
                 ],
-                [InlineKeyboardButton("", callback_data="cbhowtouse")],
+                [InlineKeyboardButton("طـريـقه التفـعيـلᐬ", callback_data="cbhowtouse")],
                 [
-                    InlineKeyboardButton("📚 الاوامر", callback_data="cbcmds"),
-                    InlineKeyboardButton("❤️ المطور", url=f"https://t.me/{OWNER_NAME}"),
+                    InlineKeyboardButton("الاوامــرᐬ", callback_data="cbcmds"),
+                    InlineKeyboardButton("مــطور البـوت♡", url=f"https://t.me/{OWNER_NAME}"),
                 ],
                 [
                     InlineKeyboardButton(
                         "👥 جروب الدعم", url=f"https://t.me/{GROUP_SUPPORT}"
                     ),
                     InlineKeyboardButton(
-                        "📣 قناة البوت", url=f"https://t.me/{UPDATES_CHANNEL}"
+                        "قنــاه البـوتᐬ", url=f"https://t.me/{UPDATES_CHANNEL}"
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        "ضيـف البـوت لمجمـوعتـك ✅",
-                        url=f"https://t.me/{BOT_USERNAME}?startgroup=true"
+                        "👨🏻‍💻 ࿋ＤＥＶ ＳＡＶＯ࿋👨🏻‍💻", url="https://t.me/DEV_SAVO"
+                    )
+                    InlineKeyboardButton(
+                        "👨🏻‍💻 ࿋ＤＥＶ AZZF࿋👨🏻‍💻", url="https://t.me/X_X_A_Z_F_X_X2"
                     )
                 ],
             ]
         ),
+        disable_web_page_preview=True,
     )
 
 
-@Client.on_message(command(["برمج السورس", f"ؤمن", f"ورس", f"لسورس", f"ادو", f"اضو"]) & filters.group & ~filters.edited)
-async def start(client: Client, message: Message):
-    await message.reply_photo(
-        photo=f"https://telegra.ph/file/18b88af791e36bf3c4259.jpg",
-        caption=f"""ᴘʀᴏɢʀᴀᴍᴍᴇʀ [ѕʜᴀᴅᴏᴡ](https://t.me/S_V_I_P) 𖡼\nᴛᴏ ᴄᴏᴍᴍụɴɪᴄᴀᴛᴇ ᴛᴏɢᴇᴛʜᴇʀ 𖡼\nғᴏʟʟᴏᴡ ᴛʜᴇ ʙụᴛᴛᴏɴѕ ʟᴏᴡᴇʀ 𖡼""",
-        reply_markup=InlineKeyboardMarkup(
-         [
+@Client.on_message(
+    command(["برمج السورس", f"ؤمن", f"ورس", f"لسورس", f"ادو", f"اضو"]) & filters.group & ~filters.edited
+)
+async def alive(client: Client, message: Message):
+    current_time = datetime.utcnow()
+    uptime_sec = (current_time - START_TIME).total_seconds()
+    uptime = await _human_time_duration(int(uptime_sec))
+
+    keyboard = InlineKeyboardMarkup(
+        [
             [
-                InlineKeyboardButton("𓌹●↯‌𝑫𝑨𝑫 𝑺𝑯𝑨𝑫𝑶𝑾↯●𓌺", url=f"https://t.me/KB_Shadow"),
+                InlineKeyboardButton("المبـرمج سـافـو✨✨", url=f"https://t.me/s_a_s_a_3li"),
+                InlineKeyboardButton("✨المـبرمج عـازف✨", url=f"https://t.me/X_X_A_Z_F_X_X2"),
             ],
             [
                 InlineKeyboardButton(
-                    "𝑬𝑹𝑹𝑶𝑹🖤", url=f"https://t.me/FA9SH"
+                    "• 👑♫︎ ༆𝙨ᵒ𝙪ʳ𝙘ᵉ_ˢᵃᵛᵒ༆ ♫︎👑 •", url=f"https://t.me/DEV_SAVO"
                 ),
             ],
             [
-                InlineKeyboardButton("♡اضف البوت الى مجموعتك♡", url=f"https://t.me/USDDBOT?startgroup=true"),
+                InlineKeyboardButton("♡اضف البوت الى مجموعتك♡", url=f"https://t.me/B8stat_bot?startgroup=true"),
             ]
-         ]
-     )
-  )
+        ]
+    )
 
-@Client.on_message(command(["لمطور", "طور"]) & filters.group & ~filters.edited)
+    alive = f"👋╖•مرحبا بك في سورس سـافو\n🎧╢• سورس الاغاني الافضل في تيليجرام\n🎶╢ •السورس لتشغيل الاغاني في الكول\n🌐╢ •سيظهر لك مطور السورس و قنوات السورس\n🤖╜ • و اذا اردت تنصيب بوت مثل هذا قم بالتواصل معنا\n🤖╜ • و اذا اردت تنصيب بوت مثل هذا قم بالتواصل معنا\nالبوت يعمل بنجاح ✅"
+
+    await message.reply_photo(
+        photo=f"{ALIVE_IMG}",
+        caption=alive,
+        reply_markup=keyboard,
+    )
+
+Client.on_message(command(["المطور", "مطور"]) & filters.group & ~filters.edited)
 async def help(client: Client, message: Message):
     await message.reply_photo(
         photo=f"{DEV_PHOTO}",
-        caption=f"""◍ الاول: هو مطور السورس \n◍ الثاني: هو مطور البوت\n√""",
+        caption=f"◍ الاول: هو مطور السورس \n◍ الثاني: هو مطور البوت\n√",
         reply_markup=InlineKeyboardMarkup(
          [
             [
-                InlineKeyboardButton("𓌹●↯‌𝑫𝑨𝑫 𝑺𝑯𝑨𝑫𝑶𝑾↯●𓌺", url=f"https://t.me/S_V_I_P"),
+                InlineKeyboardButton("⚡المـبرمج سـافـو⚡", url=f"https://t.me/s_a_s_a_3li"),
             ],
             [
                 InlineKeyboardButton(
@@ -210,7 +225,7 @@ async def new_chat(c: Client, m: Message):
                         [
                             InlineKeyboardButton(
                         "♡اضـف الـبـوت لـمـجـمـوعـتـك♡",
-                        url=f'https://t.me/USDDBOT?startgroup=true'),
+                        url=f'https://t.me/B8stat_bot?startgroup=true'),
                         ],
                     ]
                 )

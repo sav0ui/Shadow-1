@@ -1,11 +1,10 @@
-# Copyright (C) 2022 By Shadow
+# Copyright (C) 2021 By VeezMusicProject
 
 from driver.queues import QUEUE
 from pyrogram import Client, filters
 from program.utils.inline import menu_markup
 from pyrogram.types import CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 from config import (
-    BOT_PHOTO,
     ASSISTANT_NAME,
     BOT_NAME,
     BOT_USERNAME,
@@ -19,7 +18,7 @@ from config import (
 async def cbstart(_, query: CallbackQuery):
     await query.answer("الصفحه الرئيسيه")
     await query.edit_message_text(
-        f"""✨ **مرحبا عزيزي »「 [{query.message.chat.first_name}](tg://user?id={query.message.chat.id}) 」!**\n
+        f"""✨ **مرحبا عزيزي ↤「 [{query.message.chat.first_name}](tg://user?id={query.message.chat.id}) 」!**\n
 💭 **انا بوت استطيع تشغيل الموسيقي والفديو في محادثتك الصوتية**
 
 💡 تعلم طريقة تشغيلي واوامر التحكم بي عن طريق  » 📚 الاوامر !
@@ -30,10 +29,11 @@ async def cbstart(_, query: CallbackQuery):
             [
                 [
                     InlineKeyboardButton(
-                        "• نـصـب بـوتك مـن هـنا •", url="https://t.me/FA9SH/2270",
+                        "➕اضـف الـبـوت لـمـجـمـوعـتـك➕",
+                        url=f"https://t.me/MUSIC_VIKING_bot?startgroup=truehttps://t.me/MUSIC_VIKING_bot?startgroup=true",
                     )
                 ],
-                [InlineKeyboardButton("", callback_data="cbhowtouse")],
+                [InlineKeyboardButton("❓ طريقة التفعيل", callback_data="cbhowtouse")],
                 [
                     InlineKeyboardButton("📚 الاوامر", callback_data="cbcmds"),
                     InlineKeyboardButton("❤️ المطور", url=f"https://t.me/{OWNER_NAME}"),
@@ -43,13 +43,12 @@ async def cbstart(_, query: CallbackQuery):
                         "👥 جروب الدعم", url=f"https://t.me/{GROUP_SUPPORT}"
                     ),
                     InlineKeyboardButton(
-                        "📣 قناة البوت", url=f"https://t.me/FA9SH"
+                        "📣 قناة البوت", url=f"https://t.me/SOURCE_VIKING_1"
                     ),
                 ],
                 [
                     InlineKeyboardButton(
-                        "ضيـف البـوت لمجمـوعتـك ✅",
-                        url=f"https://t.me/USDDBOT?startgroup=true"
+                        "👨🏻‍💻 ࿋ＡＬＩＹＡＥＧＹＰＴ࿋👨🏻‍💻", url="https://t.me/UOZRATE"
                     )
                 ],
             ]
